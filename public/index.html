@@ -5,10 +5,22 @@
     <title>Node Chat App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
     <p>Weloime to chat app!</p>
+    <script>
+        var socket = io();
+        console.log(socket);
+        socket.on('connect', () => {
+            console.log("Connected to server");
+        });
+
+        socket.on('disconnect', () => {
+            console.log("Connection disconnected to server");
+        })
+    </script>
 </body>
 
 </html>
