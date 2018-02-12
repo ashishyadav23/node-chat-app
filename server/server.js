@@ -13,6 +13,11 @@ io.on('connection', (socket) => {
     console.log("New user connected");
     socket.on('disconnect', () => {
         console.log("user closed tab");
+    });
+    socket.emit('newMessage', {
+        from: 'Ashish yadav',
+        text: 'Hello Dost!',
+        createAt: new Date().getTime()
     })
 });
 app.use(express.static(publicPath));
