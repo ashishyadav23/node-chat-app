@@ -14,8 +14,22 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log("user closed tab");
     });
+    socket.emit('from Admin', {
+        from: "Admin",
+        text: "Welcome to chat App"
+    });
+    socket.broadcast.emit('from Admin', {
+        from: "Admin",
+        text: "New user connected",
+        createAt: new Date().getTime()
+    });
     socket.on('createMessage', (msg) => {
         console.log("text from client", msg);
+        // socket.broadcast.emit('newMessage', {
+        //     from: msg.from,
+        //     text: msg.text,
+        //     createAt: new Date().getTime()
+        // });
         io.emit('newMessage', {
             from: msg.from,
             text: msg.text,

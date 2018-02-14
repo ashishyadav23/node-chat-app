@@ -2,6 +2,9 @@ var socket = io();
 console.log(socket);
 socket.on('connect', function () {
     console.log("Connected to server");
+    socket.on('from Admin', function (msg) {
+        console.log("from Admin", msg);
+    })
 });
 
 socket.on('disconnect', function () {
