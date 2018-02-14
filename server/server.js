@@ -7,6 +7,7 @@ var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 const PORT = process.env.PORT || 3000;
+const { generateMessage } = require('./utils/message');
 
 
 io.on('connection', (socket) => {
@@ -14,27 +15,12 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log("user closed tab");
     });
-    socket.emit('from Admin', {
-        from: "Admin",
-        text: "Welcome to chat App"
-    });
-    socket.broadcast.emit('from Admin', {
-        from: "Admin",
-        text: "New user connected",
-        createAt: new Date().getTime()
-    });
+    socket.emit('from Admin', generateMessage("Admin", "Welcome to chat App"));
+    socket.broadcast.emit('from Admin', generateMessage("Admin", "New user connected"));
     socket.on('createMessage', (msg) => {
         console.log("text from client", msg);
-        // socket.broadcast.emit('newMessage', {
-        //     from: msg.from,
-        //     text: msg.text,
-        //     createAt: new Date().getTime()
-        // });
-        io.emit('newMessage', {
-            from: msg.from,
-            text: msg.text,
-            createAt: new Date().getTime()
-        });
+        // socket.broadcast.emit('newMessage', generateMessage(msg.from, msg.text));
+        io.emit('newMessage', generateMessage(msg.from, msg.text));
     });
     socket.on('disconnect', () => {
         console.log("user client is disconnect");
