@@ -14,14 +14,17 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log("user closed tab");
     });
-    socket.emit('newMessage', {
-        from: 'Avinash Singh',
-        text: 'Hello Bava!',
-        createAt: new Date().getTime()
-    });
     socket.on('createMessage', (msg) => {
         console.log("text from client", msg);
-    })
+        io.emit('newMessage', {
+            from: msg.from,
+            text: msg.text,
+            createAt: new Date().getTime()
+        });
+    });
+    socket.on('disconnect', () => {
+        console.log("user client is disconnect");
+    });
 });
 app.use(express.static(publicPath));
 app.get('/home', (err, res) => {
