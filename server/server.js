@@ -15,9 +15,12 @@ io.on('connection', (socket) => {
         console.log("user closed tab");
     });
     socket.emit('newMessage', {
-        from: 'Ashish yadav',
-        text: 'Hello Dost!',
+        from: 'Avinash Singh',
+        text: 'Hello Bava!',
         createAt: new Date().getTime()
+    });
+    socket.on('createMessage', (msg) => {
+        console.log("text from client", msg);
     })
 });
 app.use(express.static(publicPath));
