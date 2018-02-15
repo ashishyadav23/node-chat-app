@@ -13,5 +13,23 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (msg) {
     console.log("new Message Received", msg);
-    document.write(JSON.stringify(msg));
+    var li = $('<li></li>');
+    li.text(`${msg.from}: ${msg.text}`);
+    $('#messagesList').append(li);
+});
+
+socket.emit('createMessage', {
+    from: "Suraj", text: "Hola,Greet from suraj"
+}, function (ack) {
+    console.log("Got it!", ack);
+});
+
+$('#chatForm').on('submit', function (e) {
+    e.preventDefault();
+    socket.emit('createMessage', {
+        from: 'Ashish',
+        text: $('#message').val()
+    }, function (ack) {
+        console.log("Got it!", ack);
+    });
 });

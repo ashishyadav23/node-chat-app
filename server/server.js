@@ -17,10 +17,11 @@ io.on('connection', (socket) => {
     });
     socket.emit('from Admin', generateMessage("Admin", "Welcome to chat App"));
     socket.broadcast.emit('from Admin', generateMessage("Admin", "New user connected"));
-    socket.on('createMessage', (msg) => {
+    socket.on('createMessage', (msg, callback) => {
         console.log("text from client", msg);
         // socket.broadcast.emit('newMessage', generateMessage(msg.from, msg.text));
         io.emit('newMessage', generateMessage(msg.from, msg.text));
+        callback("Message delivered");
     });
     socket.on('disconnect', () => {
         console.log("user client is disconnect");
