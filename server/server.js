@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
         console.log("text from client", msg);
         // socket.broadcast.emit('newMessage', generateMessage(msg.from, msg.text));
         io.emit('newMessage', generateMessage(msg.from, msg.text));
-        callback("Message delivered");
+        callback();
     });
     socket.on('createLocationMessage', (coords) => {
         io.emit('newLocationMessage', generateLocationMessage("Admin", coords.latitude, coords.longitude));

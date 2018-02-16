@@ -5,20 +5,32 @@
     <title>Node Chat App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
 </head>
 
-<body>
-    <p>Weloime to chat app!</p>
-    <ol id="messagesList">
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>Users</h3>
+        <div id="users"></div>
+    </div>
+    <div class="chat__main">
+        <ol id="messagesList" class="chat__messages">
 
-    </ol>
-    <form id="chatForm">
-        <input type="text" name="message" id="message">
-        <button>Send</button>
-    </form>
-    <button id="send-location">Send Location</button>
+        </ol>
+        <div class="chat__footer">
+            <form id="chatForm">
+                <input type="text" name="message" id="message" autofocus autocomplete="off">
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send location</button>
+        </div>
+
+
+    </div>
+
+
     <script src="/js/index.js"></script>
 </body>
 

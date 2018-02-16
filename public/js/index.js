@@ -36,26 +36,36 @@ socket.emit('createMessage', {
 
 $('#chatForm').on('submit', function (e) {
     e.preventDefault();
-    socket.emit('createMessage', {
-        from: 'Ashish',
-        text: $('#message').val()
-    }, function (ack) {
-        console.log("Got it!", ack);
-    });
+    var messageTextBox = $('#message');
+    if (messageTextBox.val()) {
+        socket.emit('createMessage', {
+            from: 'Ashish',
+            text: messageTextBox.val()
+        }, function () {
+            $('#message').val('');
+        });
+    }
+
 });
 
 var locationButton = $('#send-location');
 locationButton.on('click', function () {
+
     if ('geolocation' in navigator) {
+        locationButton.attr('disabled', 'disabled').text("sending location");
+
         navigator.geolocation.getCurrentPosition(function (position) {
+            locationButton.removeAttr('disabled').text('Send location');
             socket.emit('createLocationMessage', {
                 longitude: position.coords.longitude,
                 latitude: position.coords.latitude,
             })
         }, function (err) {
+            locationButton.removeAttr('disabled').text('Send location');
             alert("Unable to fetch Location!");
         })
     } else {
+        locationButton.attr('disabled', 'disabled');
         alert("geoLocation is not supported by your browser");
     }
 });
